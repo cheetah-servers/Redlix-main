@@ -15,14 +15,12 @@ export default function CookiesPolicy() {
                 <div className="max-w-[1500px] mx-auto px-6 lg:px-12">
                     {/* Page Header */}
                     <div className="border-b border-gray-100 pb-12 mb-16">
-                        <span className="text-[#E61E32] font-medium text-[11px] uppercase tracking-[0.3em] mb-4 block">Preference Management</span>
+                        <span className="text-[#E61E32] font-medium text-[11px] uppercase tracking-[0.3em] mb-4 block">Information</span>
                         <h1 className="text-[36px] md:text-[48px] font-medium tracking-tight text-[#202124] leading-tight mb-6 uppercase">
-                            Cookies Policy
+                            Cookies
                         </h1>
                         <div className="flex flex-wrap gap-x-8 gap-y-2 text-[13px] text-gray-400 uppercase tracking-widest font-medium">
-                            <span>Last Updated: February 7, 2026</span>
-                            <span className="hidden md:block">|</span>
-                            <span>Effective Date: February 7, 2026</span>
+                            <span>Updated: February 7, 2026</span>
                         </div>
                     </div>
 
@@ -31,14 +29,14 @@ export default function CookiesPolicy() {
                         {/* Sidebar Info */}
                         <div className="lg:col-span-4">
                             <div className="sticky top-24 space-y-8">
-                                <div className="p-8 bg-gray-50 border border-gray-100 space-y-6">
+                                <div className="p-8 bg-gray-50 border border-gray-100 space-y-6 rounded-2xl">
                                     <div className="space-y-4">
                                         <div className="flex items-center gap-3 text-[#E61E32]">
                                             <Cookie className="w-5 h-5" />
-                                            <h3 className="text-[14px] font-medium uppercase tracking-widest">Cookie Usage</h3>
+                                            <h3 className="text-[14px] font-medium uppercase tracking-widest">Our Cookies</h3>
                                         </div>
                                         <p className="text-[14px] text-[#5f6368] font-light leading-relaxed">
-                                            We use cookies to maintain system integrity, analyze site traffic, and optimize the delivery of freelance services.
+                                            We use cookies to make our site work better and to see how people use it.
                                         </p>
                                     </div>
                                     <div className="h-[1px] bg-gray-200" />

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { X } from "lucide-react";
+import { X, Settings, ShieldCheck, PieChart } from "lucide-react";
 
 export default function CookieButton() {
     const [isOpen, setIsOpen] = useState(false);
@@ -9,7 +9,6 @@ export default function CookieButton() {
     const [isHydrated, setIsHydrated] = useState(false);
     const [hasDecided, setHasDecided] = useState(false);
 
-    // Sync state with localStorage on mount
     useEffect(() => {
         const savedPrefs = localStorage.getItem("redlix_cookie_prefs");
         if (savedPrefs) {
@@ -17,7 +16,6 @@ export default function CookieButton() {
             setPreferencesOn(parsed.performance);
             setHasDecided(true);
 
-            // Reactivate tracking if previously granted
             if (parsed.performance && (window as any).gtag) {
                 (window as any).gtag('consent', 'update', {
                     'analytics_storage': 'granted',
@@ -30,15 +28,12 @@ export default function CookieButton() {
         setIsHydrated(true);
     }, []);
 
-    // Apply "Upgrade" to the body based on preferences
     useEffect(() => {
         if (!isHydrated) return;
-
+        document.documentElement.setAttribute("data-experience-level", preferencesOn ? "optimized" : "standard");
         if (preferencesOn) {
-            document.documentElement.setAttribute("data-experience-level", "optimized");
             document.body.classList.add("system-upgrade-active");
         } else {
-            document.documentElement.setAttribute("data-experience-level", "standard");
             document.body.classList.remove("system-upgrade-active");
         }
     }, [preferencesOn, isHydrated]);
@@ -54,7 +49,6 @@ export default function CookieButton() {
         setIsOpen(false);
         setHasDecided(true);
 
-        // Update Google Tag Consent
         if ((window as any).gtag) {
             (window as any).gtag('consent', 'update', {
                 'analytics_storage': value ? 'granted' : 'denied',
@@ -65,119 +59,136 @@ export default function CookieButton() {
         }
     };
 
-    // Prevent body and html scroll when panel is open
     useEffect(() => {
-        if (isOpen) {
-            document.documentElement.style.overflow = "hidden";
-            document.body.style.overflow = "hidden";
-        } else {
-            document.documentElement.style.overflow = "";
-            document.body.style.overflow = "";
-        }
+        document.body.style.overflow = isOpen ? "hidden" : "";
     }, [isOpen]);
 
     if (!isHydrated) return null;
 
     return (
         <>
-            {/* Simple Bottom Banner */}
+            {/* The Light Glass Dock */}
             {!hasDecided && !isOpen && (
-                <div className="fixed bottom-0 left-0 right-0 z-[120] bg-white border-t border-gray-200 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] animate-in slide-in-from-bottom-full duration-700">
-                    <div className="max-w-[1400px] mx-auto px-6 py-6 md:py-8 flex flex-col md:flex-row items-center justify-between gap-6">
-                        <div className="flex-grow max-w-2xl">
-                            <h3 className="text-[13px] font-bold text-black uppercase tracking-widest mb-2 flex items-center gap-2">
-                                <span className="w-1.5 h-1.5 bg-[#E61E32] rounded-full" />
-                                Cookie Consent
-                            </h3>
-                            <p className="text-[13px] text-gray-500 leading-relaxed">
-                                We use cookies for structural integrity, performance analysis, and security. By clicking "Accept All", you agree to our use of these technologies for analytics and personalized content details. Explore our <a href="/cookies" className="underline font-bold hover:text-[#E61E32] transition-colors">Cookies Policy</a> for more info.
-                            </p>
+                <div className="fixed bottom-8 left-1/2 -translate-x-1/2 w-[calc(100%-48px)] md:w-max z-[120] animate-in slide-in-from-bottom-24 fade-in duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)]">
+                    <div className="relative overflow-hidden bg-white/90 backdrop-blur-3xl border border-gray-100 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.1)] rounded-[32px] px-3 py-3 md:px-5 md:py-5 flex flex-col md:flex-row items-center gap-4 md:gap-10">
+                        
+                        {/* Premium Scanner Effect */}
+                        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#E61E32]/50 to-transparent animate-[scan_3s_infinite]" />
+                        
+                        <div className="flex items-center gap-5 pl-2 md:pl-4">
+                            <div className="w-12 h-12 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-[26px] shrink-0">
+                                🍪
+                            </div>
+                            <div className="flex flex-col max-w-[320px]">
+                                <span className="text-gray-900 text-[14px] font-bold tracking-tight leading-tight mb-1">We use cookies to improve your experience</span>
+                                <p className="text-gray-500 text-[12px] leading-relaxed">
+                                    Our studio uses these technologies for site security, performance analytics, and to provide personalized freelance services. 
+                                    <a href="/cookies" className="ml-1 text-[#E61E32] hover:underline font-semibold">Learn more about our policy</a>
+                                </p>
+                            </div>
                         </div>
-                        <div className="flex flex-wrap items-center gap-3 shrink-0">
+
+                        <div className="h-10 w-[1px] bg-gray-100 hidden md:block" />
+
+                        <div className="flex items-center gap-3 w-full md:w-auto">
                             <button 
-                                onClick={() => setIsOpen(true)}
-                                className="text-[11px] font-bold uppercase tracking-widest text-black/40 hover:text-black transition-colors px-4 py-2"
+                                onClick={() => handleSave(true)}
+                                className="flex-1 md:flex-none px-10 py-3.5 bg-black text-white text-[13px] font-bold rounded-[24px] hover:bg-[#E61E32] transition-all duration-500 active:scale-95 whitespace-nowrap"
                             >
-                                Customize
+                                Accept all
                             </button>
                             <button 
                                 onClick={() => handleSave(false, false)}
-                                className="bg-transparent border border-black text-black px-6 py-2.5 text-[11px] font-bold uppercase tracking-widest hover:bg-black/5 transition-colors rounded-none"
+                                className="flex-1 md:flex-none px-8 py-3.5 bg-gray-50 text-gray-900 text-[13px] font-bold rounded-[24px] border border-gray-200 hover:bg-gray-100 transition-all duration-500 active:scale-95 whitespace-nowrap"
                             >
-                                Reject
+                                Decline
                             </button>
                             <button 
-                                onClick={() => handleSave(true)}
-                                className="bg-[#E61E32] text-white px-8 py-2.5 text-[11px] font-bold uppercase tracking-widest hover:bg-[#CC192A] transition-all shadow-lg hover:shadow-[#E61E32]/20 rounded-none"
+                                onClick={() => setIsOpen(true)}
+                                className="w-12 h-12 flex items-center justify-center bg-gray-50 text-gray-400 hover:text-black hover:bg-gray-100 rounded-full transition-all duration-500 shrink-0"
+                                title="Cookie settings"
                             >
-                                Accept All
+                                <Settings className="w-5 h-5" />
                             </button>
                         </div>
                     </div>
                 </div>
             )}
 
-            {/* Overlay */}
+            {/* Modal Settings Overhaul (Light Theme) */}
             <div
-                className={`fixed inset-0 bg-black/40 z-[125] transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+                className={`fixed inset-0 bg-black/20 backdrop-blur-md z-[125] transition-opacity duration-700 ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
                 onClick={() => setIsOpen(false)}
             />
 
-            {/* Cookie Panel Drawer (Keep for 'Customize') */}
             <div
-                className={`fixed top-0 right-0 w-full md:w-[480px] h-full bg-[#f8f9fa] z-[130] shadow-2xl flex flex-col transform transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+                className={`fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-32px)] md:w-[500px] bg-white border border-gray-100 z-[130] shadow-[0_0_80px_rgba(0,0,0,0.05)] rounded-[40px] flex flex-col transform transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden ${isOpen ? "scale-100 opacity-100" : "scale-90 opacity-0 pointer-events-none"}`}
             >
-                <div className="flex-1 overflow-y-auto w-full custom-scrollbar" data-lenis-prevent>
-                    <div className="p-8 md:p-10">
-                        <div className="flex justify-between items-start mb-10">
-                            <div>
-                                <h2 className="text-[26px] font-bold text-black leading-tight tracking-tight">
-                                    Cookie Preferences
-                                </h2>
-                                <p className="text-[14px] text-gray-500 mt-2">Manage your data architectural controls.</p>
+                <div className="p-10 md:p-12">
+                    <div className="flex justify-between items-start mb-12">
+                        <div>
+                            <h2 className="text-gray-900 text-[28px] font-black tracking-tight leading-none mb-3">System controls</h2>
+                            <p className="text-gray-400 text-[14px] font-medium leading-relaxed">Customize your digital interaction nodes and privacy settings.</p>
+                        </div>
+                        <button onClick={() => setIsOpen(false)} className="w-10 h-10 rounded-full border border-gray-100 flex items-center justify-center text-gray-400 hover:text-black transition-all">
+                            <X className="w-5 h-5" />
+                        </button>
+                    </div>
+
+                    <div className="space-y-6">
+                        <div className="group p-6 rounded-[32px] bg-gray-50 border border-gray-100 hover:border-[#E61E32]/30 transition-all duration-500">
+                            <div className="flex items-center gap-4 mb-3">
+                                <div className="w-10 h-10 rounded-2xl bg-[#E61E32]/10 flex items-center justify-center text-[#E61E32]">
+                                    <ShieldCheck className="w-5 h-5" />
+                                </div>
+                                <h4 className="text-gray-900 font-bold text-[16px]">Core infrastructure</h4>
                             </div>
-                            <button onClick={() => setIsOpen(false)} className="p-2 text-gray-400 hover:text-black transition-colors">
-                                <X className="w-8 h-8" />
-                            </button>
+                            <p className="text-gray-400 text-[13px] leading-relaxed ml-14">These are strictly necessary for the website to function, including secure authentication and form submissions.</p>
                         </div>
 
-                        <div className="space-y-8">
-                            <div className="p-6 bg-white border border-gray-100">
-                                <h4 className="text-[15px] font-bold text-black uppercase tracking-wide mb-2">Essential Core</h4>
-                                <p className="text-[13px] text-gray-500 leading-relaxed">
-                                    Required for secure handshakes and platform stability. Always active.
-                                </p>
-                            </div>
-
-                            <div className="p-6 bg-white border border-gray-100 flex items-start justify-between gap-4">
-                                <div className="space-y-1">
-                                    <h4 className="text-[15px] font-bold text-black uppercase tracking-wide">Performance Tracking</h4>
-                                    <p className="text-[13px] text-gray-500 leading-relaxed">
-                                        Enables diagnostic monitoring to refine user pathways.
-                                    </p>
+                        <div className="group p-6 rounded-[32px] bg-gray-50 border border-gray-100 hover:border-[#E61E32]/30 transition-all duration-500">
+                            <div className="flex justify-between items-center mb-3">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-10 h-10 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500">
+                                        <PieChart className="w-5 h-5" />
+                                    </div>
+                                    <h4 className="text-gray-900 font-bold text-[16px]">Telemetry node</h4>
                                 </div>
                                 <button
                                     onClick={() => setPreferencesOn(!preferencesOn)}
-                                    className="relative shrink-0 w-[48px] h-[26px] bg-white border-2 border-black rounded-full transition-colors"
+                                    className={`relative w-14 h-7 rounded-full transition-all duration-500 ${preferencesOn ? "bg-[#E61E32]" : "bg-gray-200"}`}
                                 >
-                                    <span
-                                        className={`absolute top-[2px] left-[2px] w-[18px] h-[18px] rounded-full transition-transform duration-300 ${preferencesOn ? "bg-[#E61E32] translate-x-[22px]" : "bg-gray-400 translate-x-0"}`}
-                                    />
+                                    <div className={`absolute top-1 left-1 w-5 h-5 bg-white rounded-full transition-transform duration-500 shadow-sm ${preferencesOn ? "translate-x-7" : "translate-x-0"}`} />
                                 </button>
                             </div>
+                            <p className="text-gray-400 text-[13px] leading-relaxed ml-14">Enables us to analyze site traffic and improve the studio workflow through anonymous usage monitoring.</p>
                         </div>
                     </div>
                 </div>
 
-                <div className="p-8 bg-[#f8f9fa] border-t border-gray-200">
+                <div className="p-8 md:p-10 border-t border-gray-100 bg-gray-50/50">
                     <button
                         onClick={() => handleSave(false)}
-                        className="w-full bg-black text-white font-bold text-[14px] py-4 uppercase tracking-[0.2em] hover:bg-black/90 transition-colors rounded-none"
+                        className="w-full py-5 bg-black text-white text-[14px] font-bold rounded-[24px] hover:bg-[#E61E32] transition-all duration-500 shadow-lg active:scale-[0.98]"
                     >
-                        Apply Preferences
+                        Apply parameters
                     </button>
                 </div>
             </div>
+
+            <style jsx>{`
+                @keyframes scan {
+                    0% { transform: translateX(-100%); }
+                    100% { transform: translateX(100%); }
+                }
+            `}</style>
         </>
     );
 }
+
+
+
+
+
+
+
