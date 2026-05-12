@@ -96,8 +96,8 @@ export default function CorporateFooter() {
                 </div>
 
                 {/* Large Brand Statement */}
-                <div className="mt-20 md:mt-32 select-none overflow-hidden">
-                    <h2 className="text-[18vw] font-black text-black/[0.03] leading-none tracking-tighter text-center translate-y-10 md:translate-y-20">
+                <div className="mt-20 md:mt-40 select-none overflow-hidden">
+                    <h2 className="text-[25vw] font-black text-[#E61E32]/[0.08] leading-none tracking-tighter text-center translate-y-12 md:translate-y-24">
                         Redlix
                     </h2>
                 </div>
