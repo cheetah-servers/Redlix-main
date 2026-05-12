@@ -80,7 +80,7 @@ export default function CookieButton() {
                                 🍪
                             </div>
                             <div className="flex flex-col max-w-[320px]">
-                                <span className="text-gray-900 text-[14px] font-bold tracking-tight leading-tight mb-1">We use cookies to improve your experience</span>
+                                <span className="text-gray-900 text-[14px] font-semibold tracking-tight leading-tight mb-1">We use cookies to improve your experience</span>
                                 <p className="text-gray-500 text-[12px] leading-relaxed">
                                     Our studio uses these technologies for site security, performance analytics, and to provide personalized freelance services. 
                                     <a href="/cookies" className="ml-1 text-[#E61E32] hover:underline font-semibold">Learn more about our policy</a>
@@ -93,13 +93,13 @@ export default function CookieButton() {
                         <div className="flex items-center gap-3 w-full md:w-auto">
                             <button 
                                 onClick={() => handleSave(true)}
-                                className="flex-1 md:flex-none px-10 py-3.5 bg-black text-white text-[13px] font-bold rounded-[24px] hover:bg-[#E61E32] transition-all duration-500 active:scale-95 whitespace-nowrap"
+                                className="flex-1 md:flex-none px-10 py-3.5 bg-black text-white text-[13px] font-semibold rounded-[24px] hover:bg-[#E61E32] transition-all duration-500 active:scale-95 whitespace-nowrap"
                             >
                                 Accept all
                             </button>
                             <button 
                                 onClick={() => handleSave(false, false)}
-                                className="flex-1 md:flex-none px-8 py-3.5 bg-gray-50 text-gray-900 text-[13px] font-bold rounded-[24px] border border-gray-200 hover:bg-gray-100 transition-all duration-500 active:scale-95 whitespace-nowrap"
+                                className="flex-1 md:flex-none px-8 py-3.5 bg-gray-50 text-gray-900 text-[13px] font-semibold rounded-[24px] border border-gray-200 hover:bg-gray-100 transition-all duration-500 active:scale-95 whitespace-nowrap"
                             >
                                 Decline
                             </button>
@@ -127,7 +127,7 @@ export default function CookieButton() {
                 <div className="p-10 md:p-12">
                     <div className="flex justify-between items-start mb-12">
                         <div>
-                            <h2 className="text-gray-900 text-[28px] font-black tracking-tight leading-none mb-3">System controls</h2>
+                            <h2 className="text-gray-900 text-[28px] font-semibold tracking-tight leading-none mb-3">System controls</h2>
                             <p className="text-gray-400 text-[14px] font-medium leading-relaxed">Customize your digital interaction nodes and privacy settings.</p>
                         </div>
                         <button onClick={() => setIsOpen(false)} className="w-10 h-10 rounded-full border border-gray-100 flex items-center justify-center text-gray-400 hover:text-black transition-all">
@@ -141,7 +141,7 @@ export default function CookieButton() {
                                 <div className="w-10 h-10 rounded-2xl bg-[#E61E32]/10 flex items-center justify-center text-[#E61E32]">
                                     <ShieldCheck className="w-5 h-5" />
                                 </div>
-                                <h4 className="text-gray-900 font-bold text-[16px]">Core infrastructure</h4>
+                                <h4 className="text-gray-900 font-semibold text-[16px]">Core infrastructure</h4>
                             </div>
                             <p className="text-gray-400 text-[13px] leading-relaxed ml-14">These are strictly necessary for the website to function, including secure authentication and form submissions.</p>
                         </div>
@@ -152,7 +152,7 @@ export default function CookieButton() {
                                     <div className="w-10 h-10 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500">
                                         <PieChart className="w-5 h-5" />
                                     </div>
-                                    <h4 className="text-gray-900 font-bold text-[16px]">Telemetry node</h4>
+                                    <h4 className="text-gray-900 font-semibold text-[16px]">Telemetry node</h4>
                                 </div>
                                 <button
                                     onClick={() => setPreferencesOn(!preferencesOn)}
@@ -169,7 +169,7 @@ export default function CookieButton() {
                 <div className="p-8 md:p-10 border-t border-gray-100 bg-gray-50/50">
                     <button
                         onClick={() => handleSave(false)}
-                        className="w-full py-5 bg-black text-white text-[14px] font-bold rounded-[24px] hover:bg-[#E61E32] transition-all duration-500 shadow-lg active:scale-[0.98]"
+                        className="w-full py-5 bg-black text-white text-[14px] font-semibold rounded-[24px] hover:bg-[#E61E32] transition-all duration-500 shadow-lg active:scale-[0.98]"
                     >
                         Apply parameters
                     </button>
@@ -185,6 +185,7 @@ export default function CookieButton() {
         </>
     );
 }
+
 
 
 
